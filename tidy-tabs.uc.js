@@ -18,6 +18,19 @@
     EXISTING_GROUP_BOOST: 0.1, // Boost similarity score for existing groups to prefer them
   };
 
+  // --- Ensure Firefox's local ML engine is enabled ---
+  // The AI sorting relies on Firefox's local inference runtime, which refuses to
+  // start unless "browser.ml.enable" is true. For Sine installs this is handled by
+  // preferences.json, but manual installs need it set here too. Without it, every
+  // embedding call throws and the sort button only plays its (failure) animation.
+  try {
+    if (!Services.prefs.getBoolPref("browser.ml.enable", false)) {
+      Services.prefs.setBoolPref("browser.ml.enable", true);
+    }
+  } catch (e) {
+    console.error("[TidyTabs] Could not enable browser.ml.enable:", e);
+  }
+
   // --- Globals & State ---
   let isSorting = false;
   let sortButtonListenerAdded = false;
@@ -329,15 +342,31 @@
         engineId: "embedding-engine",
       });
 
-      const result = await engine.run({ args: [title] });
+      // Mirror Firefox's own SmartTabGrouping call: pass the texts as a batch
+      // and request mean pooling + normalization. Without "pooling: mean" the
+      // engine returns the raw per-token tensor instead of a single sentence
+      // vector, which this parser can't use (it would silently yield null and
+      // the sort would always "fail" with just an animation).
+      const result = await engine.run({
+        args: [[title]],
+        options: { pooling: "mean", normalize: true },
+      });
+
+      // The engine returns an array whose first element is the pooled,
+      // normalized sentence vector (extra keys like "metrics" sit alongside it).
       let embedding;
 
       if (result?.[0]?.embedding && Array.isArray(result[0].embedding)) {
         embedding = result[0].embedding;
       } else if (result?.[0] && Array.isArray(result[0])) {
+        // Batched result: an array with one vector per input text.
         embedding = result[0];
-      } else if (Array.isArray(result)) {
+      } else if (Array.isArray(result) && typeof result[0] === "number") {
+        // Engine squeezed the batch dimension and returned a flat vector.
         embedding = result;
+      } else if (result?.data) {
+        // Raw Tensor object ({ data, dims }) — flatten its data buffer.
+        embedding = Array.from(result.data);
       } else {
         return null;
       }

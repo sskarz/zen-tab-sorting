@@ -2,7 +2,7 @@
   {
     "type": "checkbox",
     "label": "Enable AI",
-    "property": "browser.ml.enabled",
+    "property": "browser.ml.enable",
     "force": true,
     "defaultValue": true
   }
