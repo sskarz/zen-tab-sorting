@@ -189,7 +189,13 @@
     return validateGroupingPlan(parsed, eligibleIds, hadExistingGroups);
   };
 
-  if (typeof module !== "undefined" && module.exports) {
+  const isNodeCommonJS =
+    typeof module !== "undefined" &&
+    module.exports &&
+    typeof process !== "undefined" &&
+    Boolean(process.versions?.node);
+
+  if (isNodeCommonJS) {
     module.exports = {
       OPENROUTER_MODEL,
       RESPONSE_SCHEMA,
