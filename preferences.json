@@ -1,9 +1,0 @@
-[
-  {
-    "type": "checkbox",
-    "label": "Enable AI",
-    "property": "browser.ml.enable",
-    "force": true,
-    "defaultValue": true
-  }
-]
