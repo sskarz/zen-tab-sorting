@@ -4,9 +4,10 @@ Zen Tab Sorting reorganizes the current Zen Browser workspace into concise topic
 
 ## Setup
 
-1. Create a dedicated API key at [OpenRouter](https://openrouter.ai/keys). Set a small spending limit so the key cannot consume more than intended.
-2. Click the Zen Tab Sorting button. On first use, enter the key in Firefox's masked password prompt.
-3. The key is stored locally in the `zen.tidy-tabs.openrouter-api-key` Firefox preference. To replace or remove it, open `about:config`, search for that preference, and reset it. Zen Tab Sorting also clears the saved key after an HTTP 401 response.
+1. In Zen's **Settings → Sine Mods**, open Sine's settings and enable **Allow external JavaScript mods**. Sine blocks scripts from custom GitHub repositories by default; restart Zen after changing this setting.
+2. Create a dedicated API key at [OpenRouter](https://openrouter.ai/keys). Set a small spending limit so the key cannot consume more than intended.
+3. Click the Zen Tab Sorting button. On first use, enter the key in Firefox's masked password prompt.
+4. The key is stored locally in the `zen.tidy-tabs.openrouter-api-key` Firefox preference. To replace or remove it, open `about:config`, search for that preference, and reset it. Zen Tab Sorting also clears the saved key after an HTTP 401 response.
 
 ## Data and privacy
 

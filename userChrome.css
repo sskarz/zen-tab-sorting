@@ -213,7 +213,8 @@
 }
 
 .pinned-tabs-container-separator {
-  & toolbarseparator {
+  /* Hide Zen's native line only after the script has injected its replacement. */
+  &:has(> svg.separator-line-svg) > toolbarseparator {
     display: none !important;
   }
 }
