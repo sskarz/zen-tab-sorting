@@ -53,8 +53,8 @@
 
   & #sort-button {
     appearance: none !important;
-    opacity: 0;
-    visibility: collapse;
+    opacity: 0.5;
+    visibility: visible;
     transition:
       opacity 0.15s,
       visibility 0.15s;
@@ -64,7 +64,8 @@
     flex-shrink: 0;
     min-width: 0;
     overflow: hidden;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer !important;
     margin: 0 !important;
     padding: 0 !important;
     white-space: nowrap;
