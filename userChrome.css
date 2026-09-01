@@ -39,7 +39,7 @@
   /* Only override what's necessary, let native styles handle layout */
   overflow: visible !important;
 
-  & svg {
+  & > svg.separator-line-svg {
     width: 100% !important;
     height: 1px;
     min-height: 1px !important;
@@ -154,7 +154,7 @@
     overflow: hidden !important;
     gap: 0 !important;
 
-    & svg,
+    & > svg.separator-line-svg,
     & #sort-button {
       display: none !important;
       width: 0 !important;
@@ -174,7 +174,7 @@
   gap: 0 !important;
 }
 
-.vertical-pinned-tabs-container-separator:hover svg {
+.vertical-pinned-tabs-container-separator:hover > svg.separator-line-svg {
   width: calc(
     100% -
       (
